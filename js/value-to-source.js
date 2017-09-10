@@ -1,6 +1,5 @@
-import {
-    runInNewContext as _runInNewContext
-} from 'vm';
+import _naturalSort from 'isotropic-natural-sort';
+import _vm from 'vm';
 
 const _propertyNameRequiresQuotes = propertyName => {
         try {
@@ -8,7 +7,7 @@ const _propertyNameRequiresQuotes = propertyName => {
                 worksWithoutQuotes: false
             };
 
-            _runInNewContext(`worksWithoutQuotes = {${propertyName}: true}['${propertyName}']`, context);
+            _vm.runInNewContext(`worksWithoutQuotes = {${propertyName}: true}['${propertyName}']`, context);
 
             return !context.worksWithoutQuotes;
         } catch (exception) {
@@ -30,8 +29,18 @@ const _propertyNameRequiresQuotes = propertyName => {
         indentLevel = 0,
         indentString = '    ',
         lineEnding = '\n',
+        propertySort = {},
         visitedObjects = new Set()
     } = {}) => {
+        const {
+            caseSensitive = false,
+            direction = 'asc',
+            ignoreSpecialCharacters = true,
+            prefixPositions = {
+                _: 'last'
+            }
+        } = propertySort;
+
         switch (typeof value) {
             case 'boolean':
                 return value ?
@@ -72,6 +81,12 @@ const _propertyNameRequiresQuotes = propertyName => {
                             indentLevel,
                             indentString,
                             lineEnding,
+                            propertySort: {
+                                caseSensitive,
+                                direction,
+                                ignoreSpecialCharacters,
+                                prefixPositions
+                            },
                             visitedObjects: new Set([
                                 value,
                                 ...visitedObjects
@@ -96,6 +111,12 @@ const _propertyNameRequiresQuotes = propertyName => {
                             indentLevel,
                             indentString,
                             lineEnding,
+                            propertySort: {
+                                caseSensitive,
+                                direction,
+                                ignoreSpecialCharacters,
+                                prefixPositions
+                            },
                             visitedObjects: new Set([
                                 value,
                                 ...visitedObjects
@@ -109,17 +130,18 @@ const _propertyNameRequiresQuotes = propertyName => {
                         return `${indentString.repeat(indentLevel)}[]`;
                     }
 
-                    const itemsStayOnTheSameLine = value.every(item =>
-                        typeof item === 'object' &&
-                        item &&
-                        !(item instanceof Date) &&
-                        !(item instanceof Map) &&
-                        !(item instanceof RegExp) &&
-                        !(item instanceof Set) &&
-                        (
-                            Object.keys(item).length ||
-                            value.length === 1
-                        )
+                    const itemsStayOnTheSameLine = value.every(
+                        item =>
+                            typeof item === 'object' &&
+                            item &&
+                            !(item instanceof Date) &&
+                            !(item instanceof Map) &&
+                            !(item instanceof RegExp) &&
+                            !(item instanceof Set) &&
+                            (
+                                Object.keys(item).length ||
+                                value.length === 1
+                            )
                     );
 
                     let previousIndex = null;
@@ -143,6 +165,12 @@ const _propertyNameRequiresQuotes = propertyName => {
                                 indentLevel + 1,
                             indentString,
                             lineEnding,
+                            propertySort: {
+                                caseSensitive,
+                                direction,
+                                ignoreSpecialCharacters,
+                                prefixPositions
+                            },
                             visitedObjects: new Set([
                                 value,
                                 ...visitedObjects
@@ -165,7 +193,12 @@ const _propertyNameRequiresQuotes = propertyName => {
                         `${indentString.repeat(indentLevel)}[${lineEnding}${value.join(`,${lineEnding}`)}${lineEnding}${indentString.repeat(indentLevel)}]`;
                 }
 
-                value = Object.keys(value).sort().reduce((entries, propertyName) => {
+                value = Object.keys(value).sort(_naturalSort({
+                    caseSensitive,
+                    direction,
+                    ignoreSpecialCharacters,
+                    prefixPositions
+                })).reduce((entries, propertyName) => {
                     const propertyValue = value[propertyName],
                         propertyValueString = typeof propertyValue !== 'undefined' || includeUndefinedProperties ?
                             _valueToSource(value[propertyName], {
@@ -176,6 +209,12 @@ const _propertyNameRequiresQuotes = propertyName => {
                                 indentLevel: indentLevel + 1,
                                 indentString,
                                 lineEnding,
+                                propertySort: {
+                                    caseSensitive,
+                                    direction,
+                                    ignoreSpecialCharacters,
+                                    prefixPositions
+                                },
                                 visitedObjects: new Set([
                                     value,
                                     ...visitedObjects
