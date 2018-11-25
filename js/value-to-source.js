@@ -18,8 +18,8 @@ const _propertyNameRequiresQuotes = propertyName => {
     _quoteString = (string, {
         doubleQuote
     }) => (doubleQuote ?
-        `"${string.replace(/"/g, '\\"')}"` :
-        `'${string.replace(/'/g, '\\\'')}'`),
+        `"${string.replace(/"/gu, '\\"')}"` :
+        `'${string.replace(/'/gu, '\\\'')}'`),
 
     _valueToSource = (value, {
         circularReferenceToken = 'CIRCULAR_REFERENCE',
@@ -46,14 +46,17 @@ const _propertyNameRequiresQuotes = propertyName => {
                 return value ?
                     `${indentString.repeat(indentLevel)}true` :
                     `${indentString.repeat(indentLevel)}false`;
+
             case 'function':
                 if (includeFunctions) {
                     return `${indentString.repeat(indentLevel)}${value}`;
                 }
 
                 return null;
+
             case 'number':
                 return `${indentString.repeat(indentLevel)}${value}`;
+
             case 'object':
                 if (!value) {
                     return `${indentString.repeat(indentLevel)}null`;
@@ -131,8 +134,7 @@ const _propertyNameRequiresQuotes = propertyName => {
                     }
 
                     const itemsStayOnTheSameLine = value.every(
-                        item =>
-                            typeof item === 'object' &&
+                        item => typeof item === 'object' &&
                             item &&
                             !(item instanceof Date) &&
                             !(item instanceof Map) &&
@@ -243,10 +245,12 @@ const _propertyNameRequiresQuotes = propertyName => {
                 return value.length ?
                     `${indentString.repeat(indentLevel)}{${lineEnding}${value.join(`,${lineEnding}`)}${lineEnding}${indentString.repeat(indentLevel)}}` :
                     `${indentString.repeat(indentLevel)}{}`;
+
             case 'string':
                 return `${indentString.repeat(indentLevel)}${_quoteString(value, {
                     doubleQuote
                 })}`;
+
             case 'symbol': {
                 let key = Symbol.keyFor(value);
 
@@ -266,6 +270,7 @@ const _propertyNameRequiresQuotes = propertyName => {
 
                 return `${indentString.repeat(indentLevel)}Symbol()`;
             }
+
             case 'undefined':
                 return `${indentString.repeat(indentLevel)}void null`;
         }

@@ -57,7 +57,9 @@ _mocha.describe('valueToSource', () => {
     });
 
     _mocha.it('should handle a regular expression value', () => {
+        /* eslint-disable require-unicode-regexp */
         _chai.expect(_valueToSource(/^test\w+(regular[ \t]expression)$/gi)).to.equal('/^test\\w+(regular[ \\t]expression)$/gi');
+        /* eslint-enable require-unicode-regexp */
     });
 
     _mocha.it('should quote a string value', () => {
