@@ -46,17 +46,14 @@ const _propertyNameRequiresQuotes = propertyName => {
                 return value ?
                     `${indentString.repeat(indentLevel)}true` :
                     `${indentString.repeat(indentLevel)}false`;
-
             case 'function':
                 if (includeFunctions) {
                     return `${indentString.repeat(indentLevel)}${value}`;
                 }
 
                 return null;
-
             case 'number':
                 return `${indentString.repeat(indentLevel)}${value}`;
-
             case 'object':
                 if (!value) {
                     return `${indentString.repeat(indentLevel)}null`;
@@ -245,12 +242,10 @@ const _propertyNameRequiresQuotes = propertyName => {
                 return value.length ?
                     `${indentString.repeat(indentLevel)}{${lineEnding}${value.join(`,${lineEnding}`)}${lineEnding}${indentString.repeat(indentLevel)}}` :
                     `${indentString.repeat(indentLevel)}{}`;
-
             case 'string':
                 return `${indentString.repeat(indentLevel)}${_quoteString(value, {
                     doubleQuote
                 })}`;
-
             case 'symbol': {
                 let key = Symbol.keyFor(value);
 
@@ -270,7 +265,6 @@ const _propertyNameRequiresQuotes = propertyName => {
 
                 return `${indentString.repeat(indentLevel)}Symbol()`;
             }
-
             case 'undefined':
                 return `${indentString.repeat(indentLevel)}void null`;
         }
