@@ -33,7 +33,7 @@
         "Duane Sibilly <duane.sibilly@ibigroup.com>"
     ],
     "dependencies": {
-        "isotropic-natural-sort": "~0.2.0"
+        "isotropic-natural-sort": "~0.3.0"
     },
     "description": "Serialize a value to a source code string.",
     "devDependencies": {
@@ -105,5 +105,5 @@
         "pretest": "npm run lint",
         "test": "cross-env BABEL_ENV=test nyc mocha"
     },
-    "version": "0.3.0"
+    "version": "0.4.0"
 }
