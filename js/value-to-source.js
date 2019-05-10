@@ -14,13 +14,13 @@ const _propertyNameRequiresQuotes = propertyName => {
             return true;
         }
     },
-
     _quoteString = (string, {
         doubleQuote
-    }) => (doubleQuote ?
-        `"${string.replace(/"/gu, '\\"')}"` :
-        `'${string.replace(/'/gu, '\\\'')}'`),
-
+    }) => (
+        doubleQuote ?
+            `"${string.replace(/"/gu, '\\"')}"` :
+            `'${string.replace(/'/gu, '\\\'')}'`
+    ),
     _valueToSource = (value, {
         circularReferenceToken = 'CIRCULAR_REFERENCE',
         doubleQuote = false,

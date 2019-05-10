@@ -57,9 +57,7 @@ _mocha.describe('valueToSource', () => {
     });
 
     _mocha.it('should handle a regular expression value', () => {
-        /* eslint-disable require-unicode-regexp */
-        _chai.expect(_valueToSource(/^test\w+(regular[ \t]expression)$/gi)).to.equal('/^test\\w+(regular[ \\t]expression)$/gi');
-        /* eslint-enable require-unicode-regexp */
+        _chai.expect(_valueToSource(/^test\w+(regular[ \t]expression)$/gi)).to.equal('/^test\\w+(regular[ \\t]expression)$/gi'); // eslint-disable-line require-unicode-regexp
     });
 
     _mocha.it('should quote a string value', () => {
@@ -83,9 +81,7 @@ _mocha.describe('valueToSource', () => {
     });
 
     _mocha.it('should handle a symbol value', () => {
-        /* eslint-disable symbol-description */
-        _chai.expect(_valueToSource(Symbol())).to.equal('Symbol()');
-        /* eslint-enable symbol-description */
+        _chai.expect(_valueToSource(Symbol())).to.equal('Symbol()'); // eslint-disable-line symbol-description
     });
 
     _mocha.it('should quote a registered symbol value\'s description', () => {
@@ -299,10 +295,10 @@ _mocha.describe('valueToSource', () => {
         const context = {
                 object: {}
             },
-            valueString = _valueToSource({/* eslint-disable object-shorthand */
-                a: function () {
+            valueString = _valueToSource({
+                a: function () { // eslint-disable-line object-shorthand
                     return 'a';
-                }, /* eslint-enable object-shorthand */
+                },
                 b: () => 'b',
                 c () {
                     return 'c';
