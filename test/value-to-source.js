@@ -4,6 +4,13 @@ import _valueToSource from '../js/value-to-source.js';
 import _vm from 'vm';
 
 _mocha.describe('valueToSource', () => {
+    _mocha.it('should handle bigint values', () => {
+        _chai.expect(_valueToSource(0n)).to.equal('0n');
+        _chai.expect(_valueToSource(1n)).to.equal('1n');
+        _chai.expect(_valueToSource(321n)).to.equal('321n');
+        _chai.expect(_valueToSource(-4567n)).to.equal('-4567n');
+    });
+
     _mocha.it('should handle boolean values', () => {
         _chai.expect(_valueToSource(false)).to.equal('false');
         _chai.expect(_valueToSource(true)).to.equal('true');
