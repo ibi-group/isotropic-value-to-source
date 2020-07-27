@@ -57,7 +57,7 @@ _mocha.describe('valueToSource', () => {
     });
 
     _mocha.it('should handle a regular expression value', () => {
-        _chai.expect(_valueToSource(/^test\w+(regular[ \t]expression)$/gi)).to.equal('/^test\\w+(regular[ \\t]expression)$/gi'); // eslint-disable-line require-unicode-regexp
+        _chai.expect(_valueToSource(/^test\w+(regular[ \t]expression)$/giu)).to.equal('/^test\\w+(regular[ \\t]expression)$/giu');
     });
 
     _mocha.it('should quote a string value', () => {
@@ -81,7 +81,7 @@ _mocha.describe('valueToSource', () => {
     });
 
     _mocha.it('should handle a symbol value', () => {
-        _chai.expect(_valueToSource(Symbol())).to.equal('Symbol()'); // eslint-disable-line symbol-description
+        _chai.expect(_valueToSource(Symbol())).to.equal('Symbol()'); // eslint-disable-line symbol-description -- This is explicitly testing for a Symbol without a description.
     });
 
     _mocha.it('should quote a registered symbol value\'s description', () => {
@@ -141,27 +141,42 @@ _mocha.describe('valueToSource', () => {
     });
 
     _mocha.it('should sort object properties in ascending order by default', () => {
-        /* eslint-disable isotropic/sort-keys */
+        /* eslint-disable isotropic/sort-keys
+        --
+        This is explicitly testing improperly sorted keys.
+        */
         _chai.expect(_valueToSource({
             c: 1,
             b: 2,
             a: 3
         })).to.equal('{\n    a: 3,\n    b: 2,\n    c: 1\n}');
-        /* eslint-enable isotropic/sort-keys */
+        /* eslint-enable isotropic/sort-keys
+        --
+        Reenable the rule.
+        */
     });
 
     _mocha.it('should sort object properties in case insensitive order by default', () => {
-        /* eslint-disable isotropic/sort-keys */
+        /* eslint-disable isotropic/sort-keys
+        --
+        This is explicitly testing improperly sorted keys.
+        */
         _chai.expect(_valueToSource({
             c: 1,
             B: 2,
             a: 3
         })).to.equal('{\n    a: 3,\n    B: 2,\n    c: 1\n}');
-        /* eslint-enable isotropic/sort-keys */
+        /* eslint-enable isotropic/sort-keys
+        --
+        Reenable the rule.
+        */
     });
 
     _mocha.it('should sort object properties with _ prefix last by default', () => {
-        /* eslint-disable isotropic/sort-keys */
+        /* eslint-disable isotropic/sort-keys
+        --
+        This is explicitly testing improperly sorted keys.
+        */
         _chai.expect(_valueToSource({
             _a: 1,
             _b: 2,
@@ -170,11 +185,17 @@ _mocha.describe('valueToSource', () => {
             y: 5,
             z: 6
         })).to.equal('{\n    x: 4,\n    y: 5,\n    z: 6,\n    _a: 1,\n    _b: 2,\n    _c: 3\n}');
-        /* eslint-enable isotropic/sort-keys */
+        /* eslint-enable isotropic/sort-keys
+        --
+        Reenable the rule.
+        */
     });
 
     _mocha.it('should sort object properties ignoring special characters by default', () => {
-        /* eslint-disable isotropic/sort-keys */
+        /* eslint-disable isotropic/sort-keys
+        --
+        This is explicitly testing improperly sorted keys.
+        */
         _chai.expect(_valueToSource({
             aeiou_e: 1,
             aeioǜ_d: 2,
@@ -182,7 +203,10 @@ _mocha.describe('valueToSource', () => {
             áeiou_a: 4,
             æiou_c: 5
         })).to.equal('{\n    áeiou_a: 4,\n    aęiou_b: 3,\n    æiou_c: 5,\n    aeioǜ_d: 2,\n    aeiou_e: 1\n}');
-        /* eslint-enable isotropic/sort-keys */
+        /* eslint-enable isotropic/sort-keys
+        --
+        Reenable the rule.
+        */
     });
 
     _mocha.it('should sort object properties in descending order', () => {
@@ -198,7 +222,10 @@ _mocha.describe('valueToSource', () => {
     });
 
     _mocha.it('should sort object properties in case sensitive order', () => {
-        /* eslint-disable isotropic/sort-keys */
+        /* eslint-disable isotropic/sort-keys
+        --
+        This is explicitly testing improperly sorted keys.
+        */
         _chai.expect(_valueToSource({
             c: 1,
             B: 2,
@@ -208,7 +235,10 @@ _mocha.describe('valueToSource', () => {
                 caseSensitive: true
             }
         })).to.equal('{\n    B: 2,\n    a: 3,\n    c: 1\n}');
-        /* eslint-enable isotropic/sort-keys */
+        /* eslint-enable isotropic/sort-keys
+        --
+        Reenable the rule.
+        */
     });
 
     _mocha.it('should sort object properties without ignoring special characters', () => {
@@ -226,12 +256,18 @@ _mocha.describe('valueToSource', () => {
     });
 
     _mocha.it('should quote property names as needed', () => {
-        /* eslint-disable quote-props */
+        /* eslint-disable quote-props
+        --
+        This is explicitly testing improperly quoted properties.
+        */
         _chai.expect(_valueToSource({
             'a-b-c': 'a-b-c',
             'abc': 'abc'
         })).to.equal('{\n    \'a-b-c\': \'a-b-c\',\n    abc: \'abc\'\n}');
-        /* eslint-enable quote-props */
+        /* eslint-enable quote-props
+        --
+        Reenable the rule.
+        */
     });
 
     _mocha.it('should escape quotes within a quoted property name', () => {
@@ -241,14 +277,20 @@ _mocha.describe('valueToSource', () => {
     });
 
     _mocha.it('should double quote property names as needed', () => {
-        /* eslint-disable quote-props */
+        /* eslint-disable quote-props
+        --
+        This is explicitly testing improperly quoted properties.
+        */
         _chai.expect(_valueToSource({
             'a-b-c': 'a-b-c',
             'abc': 'abc'
         }, {
             doubleQuote: true
         })).to.equal('{\n    "a-b-c": "a-b-c",\n    abc: "abc"\n}');
-        /* eslint-enable quote-props */
+        /* eslint-enable quote-props
+        --
+        Reenable the rule.
+        */
     });
 
     _mocha.it('should escape double quotes within a double quoted property name', () => {
@@ -278,7 +320,10 @@ _mocha.describe('valueToSource', () => {
     });
 
     _mocha.it('should ignore function properties by default', () => {
-        /* eslint-disable object-shorthand */
+        /* eslint-disable object-shorthand
+        --
+        This is explicitly testing different method syntax.
+        */
         _chai.expect(_valueToSource({
             a: function () {
                 return 'a';
@@ -288,7 +333,10 @@ _mocha.describe('valueToSource', () => {
                 return 'c';
             }
         })).to.equal('{}');
-        /* eslint-enable object-shorthand */
+        /* eslint-enable object-shorthand
+        --
+        Reenable the rule.
+        */
     });
 
     _mocha.it('should handle function properties when includeFunctions is true', () => {
@@ -296,7 +344,7 @@ _mocha.describe('valueToSource', () => {
                 object: {}
             },
             valueString = _valueToSource({
-                a: function () { // eslint-disable-line object-shorthand
+                a: function () { // eslint-disable-line object-shorthand -- This is explicitly testing different method syntax.
                     return 'a';
                 },
                 b: () => 'b',
@@ -361,13 +409,19 @@ _mocha.describe('valueToSource', () => {
     });
 
     _mocha.it('should handle sparse array literals', () => {
-        /* eslint-disable comma-style, no-sparse-arrays */
+        /* eslint-disable comma-style, no-sparse-arrays
+        --
+        This is explicitly testing a sparse array.
+        */
         _chai.expect(_valueToSource([
             1,
             ,
             3
         ])).to.equal('[\n    1,\n    ,\n    3\n]');
-        /* eslint-enable comma-style, no-sparse-arrays */
+        /* eslint-enable comma-style, no-sparse-arrays
+        --
+        Reenable the rules.
+        */
     });
 
     _mocha.it('should handle empty nested array literals', () => {
