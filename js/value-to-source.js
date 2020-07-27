@@ -42,6 +42,8 @@ const _propertyNameRequiresQuotes = propertyName => {
         } = propertySort;
 
         switch (typeof value) {
+            case 'bigint':
+                return `${indentString.repeat(indentLevel)}${value}n`;
             case 'boolean':
                 return value ?
                     `${indentString.repeat(indentLevel)}true` :
