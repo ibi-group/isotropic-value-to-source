@@ -5,11 +5,11 @@
         "Duane Sibilly <duane.sibilly@ibigroup.com>"
     ],
     "dependencies": {
-        "isotropic-natural-sort": "~0.6.0"
+        "isotropic-natural-sort": "~0.7.0"
     },
     "description": "Serialize a value to a source code string",
     "devDependencies": {
-        "isotropic-dev-dependencies": "0.0.0"
+        "isotropic-dev-dependencies": "~0.1.0"
     },
     "engines": {
         "node": "^14.15.5",
@@ -37,5 +37,5 @@
         "pretest": "npm run lint",
         "test": "cross-env BABEL_ENV=test nyc --nycrc-path ./node_modules/isotropic-dev-dependencies/config/nyc.json mocha"
     },
-    "version": "0.7.0"
+    "version": "0.8.0"
 }
