@@ -1,5 +1,5 @@
 import _naturalSort from 'isotropic-natural-sort';
-import _vm from 'vm';
+import _vm from 'node:vm';
 
 const _propertyNameRequiresQuotes = propertyName => {
         try {
@@ -18,8 +18,8 @@ const _propertyNameRequiresQuotes = propertyName => {
         doubleQuote
     }) => (
         doubleQuote ?
-            `"${string.replace(/"/gu, '\\"')}"` :
-            `'${string.replace(/'/gu, '\\\'')}'`
+            `"${string.replace(/"/gv, '\\"')}"` :
+            `'${string.replace(/'/gv, '\\\'')}'`
     ),
     _valueToSource = (value, {
         circularReferenceToken = 'CIRCULAR_REFERENCE',
@@ -231,7 +231,7 @@ const _propertyNameRequiresQuotes = propertyName => {
                                 propertyName,
                             trimmedPropertyValueString = propertyValueString.substr((indentLevel + 1) * indentString.length);
 
-                        if (typeof propertyValue === 'function' && trimmedPropertyValueString.startsWith(`${propertyName}()`)) {
+                        if (typeof propertyValue === 'function' && new RegExp(`^${propertyName} ?\(\)`, 'v').test(trimmedPropertyValueString)) {
                             entries.push(`${indentString.repeat(indentLevel + 1)}${quotedPropertyName} ${trimmedPropertyValueString.substr(propertyName.length)}`);
                         } else {
                             entries.push(`${indentString.repeat(indentLevel + 1)}${quotedPropertyName}: ${trimmedPropertyValueString}`);

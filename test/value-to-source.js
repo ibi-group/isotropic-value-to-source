@@ -1,7 +1,7 @@
 import _chai from 'isotropic-dev-dependencies/lib/chai.js';
 import _mocha from 'isotropic-dev-dependencies/lib/mocha.js';
 import _valueToSource from '../js/value-to-source.js';
-import _vm from 'vm';
+import _vm from 'node:vm';
 
 _mocha.describe('valueToSource', () => {
     _mocha.it('should handle bigint values', () => {
@@ -64,7 +64,7 @@ _mocha.describe('valueToSource', () => {
     });
 
     _mocha.it('should handle a regular expression value', () => {
-        _chai.expect(_valueToSource(/^test\w+(regular[ \t]expression)$/giu)).to.equal('/^test\\w+(regular[ \\t]expression)$/giu');
+        _chai.expect(_valueToSource(/^test\w+(regular[\t ]expression)$/giv)).to.equal('/^test\\w+(regular[\\t ]expression)$/giv');
     });
 
     _mocha.it('should quote a string value', () => {
@@ -263,7 +263,7 @@ _mocha.describe('valueToSource', () => {
     });
 
     _mocha.it('should quote property names as needed', () => {
-        /* eslint-disable quote-props
+        /* eslint-disable isotropic/stylistic/quote-props
         --
         This is explicitly testing improperly quoted properties.
         */
@@ -271,7 +271,7 @@ _mocha.describe('valueToSource', () => {
             'a-b-c': 'a-b-c',
             'abc': 'abc'
         })).to.equal('{\n    \'a-b-c\': \'a-b-c\',\n    abc: \'abc\'\n}');
-        /* eslint-enable quote-props
+        /* eslint-enable isotropic/stylistic/quote-props
         --
         Reenable the rule.
         */
@@ -284,7 +284,7 @@ _mocha.describe('valueToSource', () => {
     });
 
     _mocha.it('should double quote property names as needed', () => {
-        /* eslint-disable quote-props
+        /* eslint-disable isotropic/stylistic/quote-props
         --
         This is explicitly testing improperly quoted properties.
         */
@@ -294,7 +294,7 @@ _mocha.describe('valueToSource', () => {
         }, {
             doubleQuote: true
         })).to.equal('{\n    "a-b-c": "a-b-c",\n    abc: "abc"\n}');
-        /* eslint-enable quote-props
+        /* eslint-enable isotropic/stylistic/quote-props
         --
         Reenable the rule.
         */
@@ -416,7 +416,7 @@ _mocha.describe('valueToSource', () => {
     });
 
     _mocha.it('should handle sparse array literals', () => {
-        /* eslint-disable comma-style, no-sparse-arrays
+        /* eslint-disable isotropic/stylistic/comma-style, no-sparse-arrays
         --
         This is explicitly testing a sparse array.
         */
@@ -425,7 +425,7 @@ _mocha.describe('valueToSource', () => {
             ,
             3
         ])).to.equal('[\n    1,\n    ,\n    3\n]');
-        /* eslint-enable comma-style, no-sparse-arrays
+        /* eslint-enable isotropic/stylistic/comma-style, no-sparse-arrays
         --
         Reenable the rules.
         */
