@@ -2,11 +2,11 @@
     "author": "Steven Olmsted <steven.olmsted@ibigroup.com>",
     "bugs": "https://github.com/ibi-group/isotropic-value-to-source/issues",
     "dependencies": {
-        "isotropic-natural-sort": "~0.7.0"
+        "isotropic-natural-sort": "~0.8.0"
     },
     "description": "Serialize a value to a source code string",
     "devDependencies": {
-        "isotropic-dev-dependencies": "~0.1.0"
+        "isotropic-dev-dependencies": "~0.3.0"
     },
     "engines": {
         "node": "^22.5.1",
@@ -34,5 +34,5 @@
         "test": "cross-env BABEL_ENV=test c8 -c ./node_modules/isotropic-dev-dependencies/config/c8.json mocha --import=isotropic-dev-dependencies/lib/register-babel-loader.js"
     },
     "type": "module",
-    "version": "0.8.0"
+    "version": "0.9.0"
 }
