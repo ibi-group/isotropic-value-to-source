@@ -6,6 +6,7 @@
     },
     "description": "Serialize a value to a source code string",
     "devDependencies": {
+        "eslint": "~9.8.0",
         "isotropic-dev-dependencies": "~0.3.0"
     },
     "engines": {
